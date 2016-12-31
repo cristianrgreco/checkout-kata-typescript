@@ -31,22 +31,29 @@ export class Checkout {
   complete(): Receipt {    
 
     return new Receipt({
-      total: Array.from(this.items.list()).reduce((total, item) => {
+      total: this.items.list().reduce((total, item) => {
         const quantity: number = this.items.getQuantity(item);
         const discount: Discount = this.discounts.get(item.sku);
 
         if (discount) {
-          const multiplier: number = Math.floor(quantity / discount.amount);
-          const remaining: number = quantity % discount.amount;
-
-          total = total + (multiplier * discount.discountPrice);
-          total = total + (remaining * item.price);
+          return total + this.calculateTotalWithDiscount(item.price, quantity, discount);
         } else {
-          total = total + (quantity * item.price);
+          return total + this.calculateTotal(item.price, quantity);
         }
-
-        return total;
       }, 0)
     });
+  }
+
+  private calculateTotal(price: number, quantity: number): number {
+
+    return quantity * price;
+  }
+
+  private calculateTotalWithDiscount(price: number, quantity: number, discount: Discount): number {
+
+    const multiplier: number = Math.floor(quantity / discount.amount);
+    const remaining: number = quantity % discount.amount;
+
+    return (multiplier * discount.discountPrice) + this.calculateTotal(price, remaining);
   }
 }
