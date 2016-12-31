@@ -4,16 +4,27 @@ import {Items} from './items';
 
 describe('Items', () => {
 
-  it('should return a quantity of zero for an item which has not been added', () => {
+  it('should return an empty array when no items are added', () => {
+
+    expect(new Items().list()).toEqual([]);
+  });
+
+  it('should add an item', () => {
 
     const itemA: Item = new Item({sku: 'A', price: 50});
 
-    const items: Items = new Items();
+    const items: Items = new Items()
+        .add(itemA);
 
-    expect(items.getQuantity(itemA)).toBe(0);
+    expect(items.list()).toEqual([itemA]);
   });
 
-  it('should return the quantity of the items which are added by their SKU', () => {
+  it('should return a quantity of zero for an item which has not been added', () => {
+
+    expect(new Items().getQuantity(new Item({sku: 'A', price: 50}))).toBe(0);
+  });
+
+  it('should return the quantity of the items which are added', () => {
 
     const itemA: Item = new Item({sku: 'A', price: 50});
     const itemB: Item = new Item({sku: 'B', price: 50});
@@ -33,9 +44,7 @@ describe('Items', () => {
     const items: Items = new Items()
         .add(itemA);
 
-    const newItems: Items = new Items(items);
-
-    expect(newItems.getQuantity(itemA)).toBe(1);
+    expect(new Items(items).list()).toEqual([itemA]);
   });
 
   it('should raise an error if an undefined item is added', () => {

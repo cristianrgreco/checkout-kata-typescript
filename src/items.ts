@@ -28,6 +28,11 @@ export class Items {
     return new Items(items);
   }
 
+  list(): Array<Item> {
+
+    return Array.from(this.items.keys());
+  }
+
   getQuantity(item: Item): number {
 
     if (!item) throw 'item cannot be null';

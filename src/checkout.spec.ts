@@ -24,7 +24,7 @@ describe('Checkout', () => {
     expect(receipt.total).toBe(0);
   });
 
-  it('should return the price of the scanned item when checking out a basket with one item', () => {
+  it('should return the price of the scanned item when checking out with one item', () => {
 
     const itemA: Item = new Item({sku: 'A', price: 50});
 
@@ -35,7 +35,7 @@ describe('Checkout', () => {
     expect(receipt.total).toBe(50);
   });
 
-  it('should return the price of all scanned items when checking out a basket with multiple items', () => {
+  it('should return the price of all scanned items when checking out with multiple items', () => {
 
     const itemA: Item = new Item({sku: 'A', price: 50});
     const itemB: Item = new Item({sku: 'A', price: 45});
@@ -48,7 +48,7 @@ describe('Checkout', () => {
     expect(receipt.total).toBe(95);
   });
 
-  it('should return a discounted price for a scanned item when checking out a basket with a discounted item', () => {
+  it('should return the discounted price for items which qualify for discounts when checking out', () => {
 
     const itemA: Item = new Item({sku: 'A', price: 50});
     const discountA: Discount = new Discount({sku: 'A', amount: 1, discountPrice: 45});
@@ -61,7 +61,7 @@ describe('Checkout', () => {
     expect(receipt.total).toBe(45);
   });
 
-  it('should return a discounted price and the original price for a scanned item which exceeds the discount amount', () => {
+  it('should return the discounted price and normal price for items which qualify for discounts in excess when checking out', () => {
 
     const itemA: Item = new Item({sku: 'A', price: 50});
     const discountA: Discount = new Discount({sku: 'A', amount: 2, discountPrice: 90});
@@ -76,7 +76,7 @@ describe('Checkout', () => {
     expect(receipt.total).toBe(140);
   });
 
-  it('should return multiple discounted prices for scanned items which exceed discount amount', () => {
+  it('should return multiple discounted prices when the quantity exceeds the discount amount', () => {
 
     const itemA: Item = new Item({sku: 'A', price: 50});
     const discountA: Discount = new Discount({sku: 'A', amount: 2, discountPrice: 90});
