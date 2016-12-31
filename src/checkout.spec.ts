@@ -1,3 +1,5 @@
+/// <reference path="../typings/main.d.ts" />
+
 import {Checkout} from './checkout';
 import {Receipt} from './receipt';
 import {Item} from './item';

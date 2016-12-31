@@ -5,19 +5,14 @@ import {Discount} from './discount';
 
 export class Checkout {
 
-  private items: Map<Item, number> = new Map<Item, number>();
-  private discounts: Map<string, Discount> = new Map<string, Discount>();
+  private items: Map<Item, number>;
+  private discounts: Map<string, Discount>;
 
 
   constructor(items?: Map<Item, number>, discounts?: Map<string, Discount>) {
 
-    if (items) {
-      this.items = items;
-    }
-
-    if (discounts) {
-      this.discounts = discounts;
-    }
+    this.items = items || new Map<Item, number>();
+    this.discounts = discounts || new Map<string, Discount>();
   }
 
 
