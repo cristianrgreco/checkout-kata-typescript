@@ -15,12 +15,12 @@
   <script>
       System.config({ packages: { 'dist': {defaultExtension: 'js'}}});
       Promise.all([
-          System.import('dist/checkout.spec'),
-          System.import('dist/item.spec'),
-          System.import('dist/receipt.spec'),
-          System.import('dist/discount.spec'),
-          System.import('dist/items.spec'),
-          System.import('dist/discounts.spec')
+          System.import('dist/checkout/checkout.spec'),
+          System.import('dist/checkout/receipt.spec'),
+          System.import('dist/item/item.spec'),
+          System.import('dist/item/items.spec'),
+          System.import('dist/discount/discount.spec'),
+          System.import('dist/discount/discounts.spec')
       ]);
   </script>
 </head>

@@ -1,8 +1,8 @@
 import {Receipt} from './receipt';
-import {Item} from './item';
-import {Items} from './items';
-import {Discount} from './discount';
-import {Discounts} from './discounts';
+import {Item} from '../item//item';
+import {Items} from '../item//items';
+import {Discount} from '../discount/discount';
+import {Discounts} from '../discount/discounts';
 
 
 export class Checkout {
