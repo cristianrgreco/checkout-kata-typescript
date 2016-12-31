@@ -91,4 +91,39 @@ describe('Checkout', () => {
 
     expect(receipt.total).toBe(180);
   });
+
+  it('should return zero reward points if total is less than required', () => {
+
+    const itemA: Item = new Item({sku: 'A', price: 99});
+
+    const receipt: Receipt = checkout
+        .scan(itemA)
+        .complete();
+
+    expect(receipt.rewardPoints).toBe(0);
+  });
+
+  it('should return one reward point for every 100 pence', () => {
+    
+    const itemA: Item = new Item({sku: 'A', price: 100});
+
+    const receipt: Receipt = checkout
+        .scan(itemA)
+        .complete();
+
+    expect(receipt.rewardPoints).toBe(1);
+  });
+
+  it('should return multiple reward points for every 100 pence', () => {
+
+    const itemA: Item = new Item({sku: 'A', price: 100});
+
+    const receipt: Receipt = checkout
+        .scan(itemA)
+        .scan(itemA)
+        .scan(itemA)
+        .complete();
+
+    expect(receipt.rewardPoints).toBe(3);
+  });
 });

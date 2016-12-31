@@ -30,17 +30,22 @@ export class Checkout {
 
   complete(): Receipt {    
 
-    return new Receipt({
-      total: this.items.list().reduce((total, item) => {
-        const quantity: number = this.items.getQuantity(item);
-        const discount: Discount = this.discounts.get(item.sku);
+    const total: number = this.items.list().reduce((total, item) => {
+      const quantity: number = this.items.getQuantity(item);
+      const discount: Discount = this.discounts.get(item.sku);
 
-        if (discount) {
-          return total + this.calculateTotalWithDiscount(item.price, quantity, discount);
-        } else {
-          return total + this.calculateTotal(item.price, quantity);
-        }
-      }, 0)
+      if (discount) {
+        return total + this.calculateTotalWithDiscount(item.price, quantity, discount);
+      } else {
+        return total + this.calculateTotal(item.price, quantity);
+      }
+    }, 0);
+
+    const rewardPoints: number = Math.floor(total / 100);
+
+    return new Receipt({
+      total: total,
+      rewardPoints: rewardPoints 
     });
   }
 

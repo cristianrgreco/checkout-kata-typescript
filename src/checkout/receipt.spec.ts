@@ -5,9 +5,10 @@ describe('Receipt', () => {
 
   it('should construct an instance of a Receipt', () => {
 
-    const receipt: Receipt = new Receipt({total: 50});
+    const receipt: Receipt = new Receipt({total: 50, rewardPoints: 5});
 
     expect(receipt.total).toBe(50);
+    expect(receipt.rewardPoints).toBe(5);
   });
 
   it('should throw an error if options is undefined', () => {
