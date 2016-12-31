@@ -42,17 +42,17 @@ export class Checkout {
 
     return new Receipt({
       total: Array.from(this.items.keys()).reduce((total, item) => {
-        const itemQuantity: number = this.items.get(item);
+        const quantity: number = this.items.get(item);
         const discount: Discount = this.discounts.get(item.sku);
 
         if (discount) {
-          const multiplier: number = Math.floor(itemQuantity / discount.amount);
-          const remaining: number = itemQuantity % discount.amount;
+          const multiplier: number = Math.floor(quantity / discount.amount);
+          const remaining: number = quantity % discount.amount;
 
           total = total + (multiplier * discount.discountPrice);
           total = total + (remaining * item.price);
         } else {
-          total = total + (itemQuantity * item.price);
+          total = total + (quantity * item.price);
         }
 
         return total;
