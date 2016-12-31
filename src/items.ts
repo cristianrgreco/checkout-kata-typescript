@@ -6,13 +6,9 @@ export class Items {
   private items: Map<Item, number>;
 
 
-  constructor(items?: Items | Map<Item, number>) {
+  constructor(items?: Map<Item, number>) {
 
-    if (!items) {
-      this.items = new Map<Item, number>();
-    } else {
-      this.items = Items.isItems(items) ? items.items : items;
-    }
+    this.items = items || new Map<Item, number>();
   }
 
 
@@ -38,11 +34,5 @@ export class Items {
     if (!item) throw 'item cannot be null';
 
     return this.items.get(item) || 0;
-  }
-
-
-  private static isItems(arg: any): arg is Items {
-
-    return arg.getQuantity !== undefined;
   }
 }

@@ -9,7 +9,7 @@ describe('Items', () => {
     expect(new Items().list()).toEqual([]);
   });
 
-  it('should add an item', () => {
+  it('should return an array of items which have been added', () => {
 
     const itemA: Item = new Item({sku: 'A', price: 50});
 
@@ -36,15 +36,6 @@ describe('Items', () => {
 
     expect(items.getQuantity(itemA)).toBe(2);
     expect(items.getQuantity(itemB)).toBe(1);
-  });
-
-  it('should create a new instance of Items from another instance', () => {
-
-    const itemA: Item = new Item({sku: 'A', price: 50});
-    const items: Items = new Items()
-        .add(itemA);
-
-    expect(new Items(items).list()).toEqual([itemA]);
   });
 
   it('should raise an error if an undefined item is added', () => {
