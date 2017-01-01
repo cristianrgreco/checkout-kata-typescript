@@ -4,39 +4,48 @@ import {Items} from './items';
 
 describe('Items', () => {
 
-  it('should return an empty array when no items are added', () => {
 
-    expect(new Items().list()).toEqual([]);
+  describe('#list', () => {
+
+    it('should return an empty array when no items are added', () => {
+
+      expect(new Items().list()).toEqual([]);
+    });
+
+    it('should return an array of items which have been added', () => {
+
+      const itemA: Item = new Item({sku: 'A', price: 50});
+
+      const items: Items = new Items()
+          .add(itemA);
+
+      expect(items.list()).toEqual([itemA]);
+    });
   });
 
-  it('should return an array of items which have been added', () => {
 
-    const itemA: Item = new Item({sku: 'A', price: 50});
+  describe('#getQuantity', () => {
 
-    const items: Items = new Items()
-        .add(itemA);
+    it('should return a quantity of zero for an item which has not been added', () => { 
 
-    expect(items.list()).toEqual([itemA]);
+      expect(new Items().getQuantity(new Item({sku: 'A', price: 50}))).toBe(0);
+    });
+
+    it('should return the quantity of the items which are added', () => {
+
+      const itemA: Item = new Item({sku: 'A', price: 50});
+      const itemB: Item = new Item({sku: 'B', price: 50});
+
+      const items: Items = new Items()
+          .add(itemA)
+          .add(itemA)
+          .add(itemB);
+
+      expect(items.getQuantity(itemA)).toBe(2);
+      expect(items.getQuantity(itemB)).toBe(1);
+    });
   });
 
-  it('should return a quantity of zero for an item which has not been added', () => {
-
-    expect(new Items().getQuantity(new Item({sku: 'A', price: 50}))).toBe(0);
-  });
-
-  it('should return the quantity of the items which are added', () => {
-
-    const itemA: Item = new Item({sku: 'A', price: 50});
-    const itemB: Item = new Item({sku: 'B', price: 50});
-
-    const items: Items = new Items()
-        .add(itemA)
-        .add(itemA)
-        .add(itemB);
-
-    expect(items.getQuantity(itemA)).toBe(2);
-    expect(items.getQuantity(itemB)).toBe(1);
-  });
 
   it('should raise an error if an undefined item is added', () => {
 

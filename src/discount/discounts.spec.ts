@@ -16,7 +16,7 @@ describe('Discounts', () => {
     const discounts: Discounts = new Discounts()
         .add(discountA);
 
-    expect(discounts.get('A')).toEqual(discountA);
+    expect(discounts.get('A')).toBe(discountA);
   });
 
   it('should throw an error when adding an undefined item', () => {

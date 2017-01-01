@@ -3,12 +3,17 @@ import {Item} from '../item//item';
 import {Items} from '../item//items';
 import {Discount} from '../discount/discount';
 import {Discounts} from '../discount/discounts';
+import {PriceCalculator} from './price-calculator';
+import {RewardPointCalculator} from './reward-point-calculator';
 
 
 export class Checkout {
 
   private items: Items;
   private discounts: Discounts;
+
+  private priceCalculator: PriceCalculator = new PriceCalculator();
+  private rewardPointCalculator: RewardPointCalculator = new RewardPointCalculator();
 
 
   constructor(items?: Items, discounts?: Discounts) {
@@ -30,35 +35,12 @@ export class Checkout {
 
   complete(): Receipt {    
 
-    const total: number = this.items.list().reduce((total, item) => {
-      const quantity: number = this.items.getQuantity(item);
-      const discount: Discount = this.discounts.get(item.sku);
-
-      if (discount) {
-        return total + this.calculateTotalWithDiscount(item.price, quantity, discount);
-      } else {
-        return total + this.calculateTotal(item.price, quantity);
-      }
-    }, 0);
-
-    const rewardPoints: number = Math.floor(total / 100);
+    const total: number = this.priceCalculator.calculate(this.items, this.discounts);
+    const rewardPoints: number = this.rewardPointCalculator.calculate(total);
 
     return new Receipt({
       total: total,
-      rewardPoints: rewardPoints 
+      rewardPoints: rewardPoints
     });
-  }
-
-  private calculateTotal(price: number, quantity: number): number {
-
-    return quantity * price;
-  }
-
-  private calculateTotalWithDiscount(price: number, quantity: number, discount: Discount): number {
-
-    const multiplier: number = Math.floor(quantity / discount.amount);
-    const remaining: number = quantity % discount.amount;
-
-    return (multiplier * discount.discountPrice) + this.calculateTotal(price, remaining);
   }
 }
